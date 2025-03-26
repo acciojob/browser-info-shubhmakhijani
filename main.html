@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Search</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Browser Information</title>
+    <script>
+        function getBrowserInfo() {
+            const userAgent = navigator.userAgent;
+            let browserName = "Unknown";
+            let version = "Unknown";
+
+            if (userAgent.includes("Chrome")) {
+                browserName = "Google Chrome";
+                version = userAgent.match(/Chrome\/([\d.]+)/)[1];
+            } else if (userAgent.includes("Firefox")) {
+                browserName = "Mozilla Firefox";
+                version = userAgent.match(/Firefox\/([\d.]+)/)[1];
+            } else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) {
+                browserName = "Apple Safari";
+                version = userAgent.match(/Version\/([\d.]+)/)[1];
+            } else if (userAgent.includes("Edge")) {
+                browserName = "Microsoft Edge";
+                version = userAgent.match(/Edg\/([\d.]+)/)[1];
+            } else if (userAgent.includes("MSIE") || userAgent.includes("Trident")) {
+                browserName = "Internet Explorer";
+                version = userAgent.match(/(MSIE |rv:)([\d.]+)/)[2];
+            }
+
+            document.getElementById("browser-info").textContent = 
+                You are using ${browserName} version ${version};
+        }
+
+        window.onload = getBrowserInfo;
+    </script>
 </head>
 <body>
-
-    <div class="search">
-        <input type="text" class="input" placeholder="Search...">
-        <button class="btn">🔍</button>
-    </div>
-
-    <script src="script.js"></script>
+    <div id="browser-info"></div>
 </body>
 </html>
